@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "phuniks"
+version = "0.0.1"
+dependencies = [
+    "kivy",
+    "pymunk",
+    'importlib-metadata; python_version<"3.8"',
+]
+authors = [
+  { name="Philip Tregoning", email="Philip.Tregoning@gmail.com" },
+]
+description = "A 2D physics simulator sandbox"
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GPL-3 License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/Twirlip-of-the-Mists/phuniks"
+"Bug Tracker" = "https://github.com/Twirlip-of-the-Mists/phuniks/issues"
+
+[project.scripts]
+phuniks = "phuniks.phuniks:main"
+
