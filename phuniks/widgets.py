@@ -5,6 +5,8 @@ from kivy.graphics.tesselator import Tesselator
 from kivy.vector import Vector
 from kivy.graphics import PushMatrix, PopMatrix, Translate, Rotate, Scale, Rectangle, Color, Line, Ellipse, Mesh
 
+from .utils import pairwise    
+
 class MarkerWidget(Widget):
     marker_colour = (1, 0, 0)
     marker_radius = 5
@@ -66,25 +68,28 @@ class OutlineWidget(MovableWidget):
         super().__init__(*args, **kwargs)
         with self.canvas:
             Color(0, 0, 0)
-            self.border = Line(points=[0,0], width=self.border_width)
-            self.tentative = Line(points=[0,0,0,0], width=1)
+            self.line = Line(points=[0,0], width=self.border_width)
+            #self.tentative = Line(points=[0,0,0,0], width=1)
     
     def append(self, point):
-        self.border.points.append(point[0])
-        self.border.points.append(point[1])
-        self.border.points = self.border.points
+        self.line.points.append(point[0])
+        self.line.points.append(point[1])
+        self.line.points = self.line.points
       
-    def update(self, point):
-        self.border.points[-2] = point[0]
-        self.border.points[-1] = point[1]
-        self.border.points = self.border.points
+    def points(self):
+        return list(pairwise(self.line.points))
+    
+    #def update(self, point):
+    #    self.border.points[-2] = point[0]
+    #    self.border.points[-1] = point[1]
+    #    self.border.points = self.border.points
       
-    def guess(self, point):
-        self.tentative.points[-4] = self.border.points[-2]
-        self.tentative.points[-3] = self.border.points[-1]
-        self.tentative.points[-2] = point[0]
-        self.tentative.points[-1] = point[1]
-        self.tentative.points = self.tentative.points
+    #def guess(self, point):
+    #    self.tentative.points[-4] = self.border.points[-2]
+    #    self.tentative.points[-3] = self.border.points[-1]
+    #    self.tentative.points[-2] = point[0]
+    #    self.tentative.points[-1] = point[1]
+    #    self.tentative.points = self.tentative.points
       
 class PolygonWidget(MovableWidget):
     def __init__(self, vertices, *args, **kwargs):
@@ -93,7 +98,7 @@ class PolygonWidget(MovableWidget):
         for vertex in vertices:
             points.append(vertex[0])
             points.append(vertex[1])
-        print(points)
+        #print(points)
         tesselator = Tesselator()
         tesselator.add_contour(points)
         tesselator.tesselate()

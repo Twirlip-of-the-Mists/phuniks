@@ -31,7 +31,7 @@ def overlay_with_circles(space, space_widget, body, radius=10):
     for shape in body.shapes:
         spacing = int(radius)
         shape.cache_bb()
-        print('Bounding box', shape.bb)
+        #print('Bounding box', shape.bb)
         y_spacing = int(2 * spacing * 0.86602540378) # cosine(30)
         for x in range(int(shape.bb.left), int(shape.bb.right), 2*int(spacing)):
             for y in range(int(shape.bb.bottom), int(shape.bb.top), 2*y_spacing):

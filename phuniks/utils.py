@@ -4,6 +4,11 @@ from kivy.app import App
 
 #import pymunk
 
+def pairwise(iterable):
+        "s -> (s0, s1), (s2, s3), (s4, s5), ..."
+        a = iter(iterable)
+        return zip(a, a)
+
 def pathto(filename):
     package = App.get_running_app().package
     return str(package/filename)

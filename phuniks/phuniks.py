@@ -23,7 +23,7 @@ from .commanding import command, on_command
 from .menu_widget import MenuWidget
 from .space_widget import SpaceWidget
 
-from .makers import CircleMaker, RectangleMaker, PlaneMaker
+from .makers import BrushMaker, CircleMaker, RectangleMaker, PolygonMaker, PlaneMaker
 from .modders import Kill, Explode
 from .mouse import Mouse
 
@@ -46,7 +46,7 @@ class Phuniks():
         self.iterations = 10
         self.mouse_body = pymunk.Body(body_type=pymunk.Body.KINEMATIC)
         self.action = None # Widget currently being built
-        self.actor = CircleMaker # Builder to invoke on mousedown
+        self.actor = BrushMaker # Builder to invoke on mousedown
         self.paused = False
         
         self.things_selected = []
@@ -71,10 +71,14 @@ class Phuniks():
         
     def make(self, cmnd, subcmnd):
         print('Phuniks.make', subcmnd)
-        if subcmnd == 'Circle':
+        if subcmnd == 'Brush':
+            self.actor = BrushMaker
+        elif subcmnd == 'Circle':
             self.actor = CircleMaker
         elif subcmnd == 'Rectangle':
             self.actor = RectangleMaker
+        elif subcmnd == 'Polygon':
+            self.actor = PolygonMaker
         elif subcmnd == 'Plane':
             self.actor = PlaneMaker
 

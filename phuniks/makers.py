@@ -1,13 +1,70 @@
 import pymunk
 from pymunk import Vec2d
+import pyclipper
 
 from .mouse import Mouse
-from .widgets import CircleWidget, RectangleWidget, PolygonWidget
+from .widgets import OutlineWidget, CircleWidget, RectangleWidget, PolygonWidget
 from .things import Circle, Polygon
+
+class BrushMaker(Mouse):
+    def mouse_click(self, position, space_widget, **kwarg):
+        #super().__init__()
+        self.position = position
+        self.widget = OutlineWidget(position=position)
+        space_widget.add_widget(self.widget)
+        
+    def mouse_drag(self, position, **kwargs):
+        self.widget.append(position - self.position)
+        # print(self.vertices)
+        
+    def mouse_release(self, space, space_widget, shapeargs, **kwargs):
+        color = self.widget.color
+        points = self.widget.points()
+        space_widget.remove_widget(self.widget)
+        for polygon in pyclipper.SimplifyPolygon(points, True):
+            #self.simple.append(SimplePolygon(polygon))
+            thing = Polygon(self.position, 0, color, shapeargs, polygon)
+            thing.add_to_space(space, space_widget)
+        return self.COMPLETE
+
+class PolygonMaker(Mouse):
+    pass
+    # def mouse_click(self, position, space_widget, **kwarg):
+    #     print(f'PolygonMaker.mouse_click({position})')
+    #     #super().__init__()
+    #     if self.result != self.ONGOING:
+    #         self.position = position
+    #         self.widget = OutlineWidget(position=position)
+    #         self.widget.append((0,0))
+    #         space_widget.add_widget(self.widget)
+    #         self.result = self.ONGOING
+    #     else:
+    #         self.widget.append(position - self.position)
+
+        
+    # def mouse_drag(self, position, **kwargs):
+    #     print(f'PolygonMaker.mouse_drag({position})')
+    #     self.widget.update(position - self.position)
+    #     # print(self.vertices)
+        
+    # # def mouse_move(self, position, **kwargs):
+    # #     print(f'PolygonMaker.mouse_move({position})')
+    # #     self.widget.guess(position - self.position)
+    # #     # print(self.vertices)
+        
+    # def mouse_release(self, space, space_widget, shapeargs, **kwargs):
+    #     print(f'PolygonMaker.mouse_release()')
+    #     # if self.position.get_distance(position)
+    #     # color = self.widget.color
+    #     # color = self.widget.color
+    #     # space_widget.remove_widget(self.widget)
+    #     #thing = Circle(self.position, 0, color, shapeargs, self.radius)
+    #     #thing.add_to_space(space, space_widget)
+    #     return self.result
 
 class CircleMaker(Mouse):
     def mouse_click(self, position, space_widget, **kwarg):
-        super().__init__()
+        #super().__init__()
         self.position = position
         self.radius = 4
         self.widget = CircleWidget(position=position)
@@ -62,8 +119,8 @@ class PlaneMaker(Mouse):
         space_widget.add_widget(self.widget)
         
     def mouse_drag(self, position, **kwargs):
-        print(self.position)
-        print(position)
+        #print(self.position)
+        #print(position)
         self.widget.angle = (self.position - position).angle_degrees + 90
 
     def mouse_release(self, space, space_widget, shapeargs, **kwargs):

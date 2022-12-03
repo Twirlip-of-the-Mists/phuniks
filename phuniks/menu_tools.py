@@ -10,7 +10,20 @@ class ToolsMenu(PopupMenu):
     def __init__(self, on_close):  # Tools popup menu
         super().__init__('Tools', pos=(200,196))
 
-        tool_names = [('Brush', 'Make'), ('Circle', 'Make'), ('Rectangle', 'Make'), ('Polygon', 'Make'), ('Plane', 'Make'), ('Attach', 'Join'), ('Hinge', 'Join'), ('Spring', 'Join'), ('Grab', 'Modify'), ('Select', 'Modify'), ('Kill', 'Modify'), ('Explode', 'Modify')]
+        tool_names = [
+            ('Brush', 'Make'),
+            ('Circle', 'Make'),
+            ('Rectangle', 'Make'),
+            #('Polygon', 'Make'),
+            ('Plane', 'Make'),
+            #('Attach', 'Join'),
+            #('Hinge', 'Join'),
+            #('Spring', 'Join'),
+            #('Grab', 'Modify'),
+            #('Select', 'Modify'),
+            ('Kill', 'Modify'),
+            ('Explode', 'Modify')
+        ]
         self.on_close = on_close
         
         self.tools = {}

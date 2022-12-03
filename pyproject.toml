@@ -8,6 +8,7 @@ version = "0.0.1"
 dependencies = [
     "kivy",
     "pymunk",
+    "pyclipper",
     'importlib-metadata; python_version<"3.8"',
 ]
 authors = [

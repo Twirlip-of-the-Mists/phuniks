@@ -55,7 +55,7 @@ class Thing():
     def remove_from_space(self, space, space_widget):
         space.remove(self.body, *self.shapes)
         space.things.remove(self)
-        print(space_widget)
+        #print(space_widget)
         space_widget.remove_widget(self.widget)
 
     def apply_shape_args(self, shapeargs):
