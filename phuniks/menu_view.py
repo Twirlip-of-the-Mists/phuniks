@@ -17,7 +17,7 @@ class ViewMenu(PopupMenu):
         on_command('ViewZoom', self.zoom_command)
         
     #def on_active(self, instance, state):
-    #  self.on_set_option(instance.label.text, state=='down')
+        #self.on_set_option(instance.label.text, state=='down')
 
     #def zoom_string(self, popup, spinner, text, value):
         #self.on_set_option('Zoom', math.pow(2, value))
